@@ -9,6 +9,7 @@
         <meta name="keywords" content="mattinsalto,Martin Garmendia,programming,raspberry pi,rpi">
         <meta name="generator" content="Hugo 0.32.4" />
 
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
         <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
 
@@ -104,14 +105,128 @@
     </div>
 
     
-        Linux kernel has drivers for this modem, so the installation is straight forward:
-# apt-get install wvdial  Edit configuration
-# nano /etc/wvdial.conf  Modem standard configuration:
-[Dialer Defaults] New PPPD = yes Stupid Mode = 1 Modem Type = 3G Modem Baud = 460800 Modem = /dev/ttyUSB0 ISDN = 0 [Dialer poweron] Init1 = AT+CFUN=1 [Dialer poweroff] Init1 = AT+CFUN=0  ISP specific config. Here you have different configurations for two ISPs from Spain.
+        
 
-        
-            <a href="/article/huawei-e220-on-raspberry-pi/" class="more">Continue reading</a>
-        
+<p>Linux kernel has drivers for this modem, so the installation is straight forward:</p>
+
+<pre><code class="language-sh"># apt-get install wvdial
+</code></pre>
+
+<p>Edit configuration</p>
+
+<pre><code class="language-sh"># nano /etc/wvdial.conf
+</code></pre>
+
+<p>Modem standard configuration:</p>
+
+<pre><code class="language-sh">[Dialer Defaults]
+New PPPD = yes
+Stupid Mode = 1
+Modem Type = 3G Modem
+Baud = 460800
+Modem = /dev/ttyUSB0
+ISDN = 0
+
+[Dialer poweron]
+Init1 = AT+CFUN=1
+
+[Dialer poweroff]
+Init1 = AT+CFUN=0
+</code></pre>
+
+<p>ISP specific config. Here you have different configurations for two ISPs from Spain.
+Movistar:</p>
+
+<pre><code class="language-sh">[Dialer movistar]
+Init2 = AT
+Init3 = AT&amp;F&amp;D2&amp;C1E0V1S0=0
+Init4 = AT+IFC=2,2
+Init5 = ATS0=0
+Init6 = AT
+Init7 = AT&amp;F&amp;D2&amp;C1E0V1S0=0
+Init8 = AT+IFC=2,2
+Phone = *99***1#
+Password = MOVISTAR
+Username = MOVISTAR
+</code></pre>
+
+<p>FreedomPop (Uses masmovil configuration)</p>
+
+<pre><code class="language-sh">[Dialer freedompop]
+Init1 = ATZ
+Init2 = ATQ0 V1 E1 S0=0 &amp;C1 &amp;D2
+Init3 =
+Init4 = AT+CGDCONT=1,&quot;IP&quot;,&quot;internetmas&quot;,&quot;&quot;,0,0
+Baud = 3600000
+Username = off
+Password = off
+New PPPD = yes
+Phone = *99*#
+Dial Command = ATDT
+Stupid Mode = 1
+Compuserve = 0
+Force Address =
+Idle Seconds = 0
+Carrier Check = no
+ISDN = 0
+Auto DNS = 1
+Remote Name = &quot;*&quot;
+</code></pre>
+
+<p>To dial, type:</p>
+
+<pre><code class="language-sh"># wvdial freedompop
+</code></pre>
+
+<p>I have deactivated SIM’s PIN for simplicity and I haven’t tryed to dial with it, but you could test with:</p>
+
+<pre><code class="language-sh">[Dialer pin]
+Dial Command = ATDT
+Init = ATZ
+Init2 = AT+CPIN=XXXX
+</code></pre>
+
+<p>then:</p>
+
+<pre><code class="language-sh"># wvdial pin
+# wvdial movistar
+</code></pre>
+
+<p>To test if it has worked sue an ifconfig to see if ppp0 has a valid IP</p>
+
+<pre><code class="language-sh"># ifconfig
+</code></pre>
+
+<p>To connect at startup edit</p>
+
+<pre><code class="language-sh"># nano /etc/network/interfaces
+</code></pre>
+
+<p>and add this line</p>
+
+<pre><code class="language-sh">iface ppp0 inet wvdial
+	provider movistar
+</code></pre>
+
+<p>As the modem takes some time for initialization we could delay the dialing in</p>
+
+<pre><code class="language-sh"># nano /etc/rc.local
+</code></pre>
+
+<p>for 20 seconds</p>
+
+<pre><code class="language-sh">sleep 20
+ifup ppp0
+</code></pre>
+
+<p>Credit goes to:</p>
+
+<h4 id="juan-josé-valera-movistar"><a href="http://www.juanjosevalera.com/archivos/huawei-e220-configuracion-en-raspberry-pi/">Juan José Valera</a>.</h4>
+
+<p>and</p>
+
+<h4 id="pablo-martín-medrano-freedompop"><a href="http://odkq.com/debianx060s">Pablo Martín Medrano</a>.</h4>
+
     
 </div>
 
