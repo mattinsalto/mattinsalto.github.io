@@ -1,0 +1,445 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="author" content="Martin Garmendia">
+        <meta name="description" content="A place for storing notes about random stuff">
+        <meta name="keywords" content="mattinsalto,Martin Garmendia,programming,raspberry pi,rpi">
+        <meta name="generator" content="Hugo 0.32.4" />
+
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+
+        <link rel="stylesheet" href="/dist/theme.css">
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.2.1/dist/instantsearch.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.2.1/dist/instantsearch-theme-algolia.min.css">
+
+
+        
+            
+        
+
+        
+        <title>mattinsalto  | Pyhton remote debugging on a Raspberry Pi</title>
+    </head>
+    <body class="bilberry-hugo-theme">
+        
+<nav>
+
+    <div class="container">
+        <ul class="topnav">
+            
+        </ul>
+
+        
+
+         <div id="search-box" class="search">
+            <i class="fa fa-search"></i>
+            <input id="search" type="text" placeholder="Search ...">
+        </div>
+        
+    </div>
+</nav>
+
+
+        <header>
+    <div class="container">
+        <div class="logo">
+            <a href="/" class="logo">
+                
+                    <img src="https://www.gravatar.com/avatar/89a45ba9244d452a03761a295eb480ea?d=mm&size=200" alt="">
+                
+
+                <span class="overlay"><i class="fa fa-home"></i></span>
+            </a>
+        </div>
+        <div class="titles">
+            <h3 class="title"><a href="/">mattinsalto</a></h3>
+            
+                <span class="subtitle">A place for storing notes about random stuff</span>
+            
+        </div>
+
+        
+        <div class="toggler">
+        
+            <i class="fa fa-bars" aria-hidden="true"></i>
+        </div>
+    </div>
+</header>
+
+
+        <div class="main container">
+            
+     
+    <div class="article-wrapper u-cf single">
+        
+            <a class="bubble" href="/code/remote-debugging-with-wing-python-ide/">
+    <i class="fa fa-fw fa-code"></i>
+</a>
+
+<article class="default article">
+    
+    <div class="featured-image">
+        <a href="/code/remote-debugging-with-wing-python-ide/">
+            <img src="/images/python-remote-debugging.jpg" alt="">
+        </a>
+    </div>
+
+
+    <div class="content">
+    <h3><a href="/code/remote-debugging-with-wing-python-ide/">Pyhton remote debugging on a Raspberry Pi</a></h3>
+    <div class="meta">
+        <span class="date moment">2017-12-14</span>
+
+        
+            <span class="categories">
+                
+                    <a href="/categories/code">Code</a>
+                
+                    <a href="/categories/tutorials">Tutorials</a>
+                
+            </span>
+        
+
+        
+            <span class="author"><a href="/author/martin-garmendia">Martin Garmendia</a></span>
+        
+    </div>
+
+    
+        <p>Although is posible to program in the Raspberry Pi (rpi onwards), is a little bit rudimentary due to it&rsquo;s low power and lack of powerfull IDEs. This is specially true if you don&rsquo;t install a desktop environment as in Raspbian lite.</p>
+
+<p>There are some options for Python remote debugging on a rpi, but only few of them are free and posible from a Mac. The option I&rsquo;m gonna write about, is the one provided by Wingware Wing Personal (free editon) Python IDE. You can find the information about rpi Python remote debugging in it&rsquo;s <a href="http://wingware.com/pub/wingide/">website</a>, but it has some broken links and there are areas not covered by specific solutions that let the reader choose her preferred one. I&rsquo;ll try to give a complete solution here.</p>
+
+<ul>
+<li>Download <a href="http://wingware.com/downloads/wing-personal">Wing Python IDE</a></li>
+<li>Enable ssh remote access in the rpi</li>
+</ul>
+
+<p>If you don&rsquo;t have enabled yet, follow the instructions at
+<a href="https://www.raspberrypi.org/documentation/remote-access/ssh/">Raspberry pi official docs</a></p>
+
+<p>Once enabled, to know your rpi ip type in the rpi terminal</p>
+
+<pre><code class="language-sh">$ ifconfig
+</code></pre>
+
+<p>You will see the IPs for the different network interfaces:</p>
+
+<pre><code class="language-sh">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 192.168.1.91  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet6 fe80::178e:1188:54a:c522  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether b8:27:eb:e9:67:5b  txqueuelen 1000  (Ethernet)
+        RX packets 343823  bytes 26399285 (25.1 MiB)
+        RX errors 0  dropped 100  overruns 0  frame 0
+        TX packets 54392  bytes 3054249 (2.9 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 48  bytes 6280 (6.1 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 48  bytes 6280 (6.1 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+````
+
+When using a wired connection it will be eth0, if wireless, should be wlan0
+
+If everything is OK, you can connect to rpi with
+```sh
+$ ssh pi@your-rpi-ip
+</code></pre>
+
+<p>In order to avoid discovering what IP your rpi has taken every time it reboots, you could set a static IP editing /etc/dhcpcd.conf</p>
+
+<pre><code class="language-sh">$ nano /etc/dhcpcd.conf
+</code></pre>
+
+<p>and adding this lines to the end of the file</p>
+
+<pre><code class="language-sh">interface eth0
+
+static ip_address=192.168.1.91/24
+static routers=192.168.1.1
+static domain_name_servers=8.8.8.8 8.8.4.4
+</code></pre>
+
+<p>then reboot your rpi for the configuration to take effect</p>
+
+<pre><code class="language-sh">$ reboot
+</code></pre>
+
+<p>or
+sue a</p>
+
+<pre><code class="language-sh">$ sudo service networking restart
+</code></pre>
+
+<ul>
+<li>Generate ssh public / private key pair
+We don&rsquo;t want to be promted for a password every time we want to execute a command in the rpi. We can generate a public and private key pair and put the public key in the rpi to trust the connection without promting for password.</li>
+</ul>
+
+<p>In Mac Terminal type (leave it empty when asks for password protection)</p>
+
+<pre><code class="language-sh">$ cd ~/.ssh
+$ ssh-keygen -t rsa
+</code></pre>
+
+<p>Now copy the contents of id_rsa.pub to /home/pi/.ssh/authorized_keys as a new line in the rpi. If authorized_keys doesn&rsquo;t exist you can create it and copy the contents of id_rsa.pub.</p>
+
+<p>For now on, you can ssh your rpi from the Mac without password. This also means you can copy files from the Mac to the rpi via scp without password promting.</p>
+
+<ul>
+<li>Download Wingware remote debugger to the raspberry pi
+At the time of writing the last version of Wing Python IDE is 6.0.9. If it has changed, <a href="http://wingware.com/pub/wingide/">here you have</a> the root of the download directory for the different versions. Copy the link to your version of wingide-debugger-raspbian and ssh your rpi:</li>
+</ul>
+
+<pre><code class="language-sh">$ ssh pi@rpi-ip
+$ wget http://wingware.com/pub/wingide/6.0.9/wingide-debugger-raspbian-6.0.9-1.tar.bz2
+$ tar xaf wingide-debugger-raspbian-6.0.9-1.tar.bz2
+$ mv wingide-debugger-raspbian-6.0.9-1 wing-rmt-dbgr
+</code></pre>
+
+<p>We also need to copy a file (wingdebugpw) from Settings directory of the Wing installation on the Mac to the recently decompressed directory in the rpi. To see where this directory is, go to Wings about box (Wingpersonal menu -&gt; About Wingpersonal -&gt; Settings directory).</p>
+
+<p>Once located, copy to rpi via scp (don&rsquo;t forget to change YourUser and your-rpi-ip)</p>
+
+<pre><code class="language-sh">$ scp &quot;/Users/YourUser/Library/Application Support/Wing Personal/v6/wingdebugpw&quot; pi@your-rpi-ip:/home/pi/wing-rmt-dbgr
+</code></pre>
+
+<ul>
+<li>Create a new Wing Pyhton IDE project
+In this example we will name it PythonRemoteDebugTest
+and locate it at
+<em>/Users/YourUser/src/PythonRemoteDebugTest</em>
+Add a new python script to your project:</li>
+</ul>
+
+<p><em>main.py</em>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style=";border-spacing:0;padding:0;margin:0;border:0;width:100%;overflow:auto;display:block;"><tr><td style=";vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#7c7c79;margin-right:0.4em;padding:00.4em00.4em;display:block;">1</span><span style="color:#7c7c79;margin-right:0.4em;padding:00.4em00.4em;display:block;">2</span></code></pre></td>
+<td style=";vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">name <span style="color:#f92672">=</span> input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;What is your name? &#39;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;Hello {}&#39;</span><span style="color:#f92672">.</span>format(name))</code></pre></td></tr></table>
+</div>
+</div></p>
+
+<p>Run it locally to ensure it works as expected</p>
+
+<ul>
+<li>Map local directory with a remote one
+Create a directory in the rpi to host your python proyects
+You can execute a remote command via ssh from the Mac Terminal without the need of an open ssh sesssion
+<code>sh
+$ ssh pi@192.168.1.91 &quot;mkdir /home/pi/python&quot;
+</code></li>
+</ul>
+
+<p>Preferences -&gt; Debugger -&gt; Advanced
+Scroll down to <em>Location Map</em>, select de existing line and pulse <em>edit button</em>
+Leave remote ip as 127.0.0.1 because we will set a reverse ssh tunnel so will look like the connection comes from localhost. Specify a mapping and set remote to
+/home/pi/python
+and local to
+/Users/mattinsalto/src/Python</p>
+
+<ul>
+<li>Create a reverse ssh tunnel between your Mac and Rpi
+<code>sh
+$ ssh -N -R 50005:localhost:50005 pi@192.168.1.91
+</code></li>
+<li>Copy your project files to rpi
+<code>sh
+$ scp -r /Users/mattinsalto/src/Python/PythonRemoteDebugTest pi@192.168.1.91:/home/pi/python
+</code></li>
+<li>Start remote debugging setting desired python version and calling wingdb script
+$ ssh pi@192.168.1.91 &ldquo;export WINGDB_PYTHON=/usr/bin/python3 &amp;&amp; sudo -E /home/pi/wing-rmt-dbgr/wingdb /home/pi/python/PythonRemoteDebugTest/main.py&rdquo;</li>
+</ul>
+
+    
+</div>
+
+    
+    
+    <div class="tags">
+        <i class="fa fa-tags"></i>
+        
+            <a href="/tags/python">python</a>
+        
+            <a href="/tags/raspberry-pi">raspberry pi</a>
+        
+            <a href="/tags/debugging">debugging</a>
+        
+    </div>
+    
+
+
+</article>
+
+        
+    </div>
+
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "mattinsalto" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+     
+
+        </div>
+
+        <footer>
+    <div class="container">
+        <div class="recent-posts">
+            <strong>Latest posts</strong>
+                <ul>
+                
+                    <li>
+                        <a href="/code/remote-debugging-with-wing-python-ide/">Pyhton remote debugging on a Raspberry Pi</a>
+                    </li>
+                
+                    <li>
+                        <a href="/article/huawei-e220-on-raspberry-pi/">Huawei E220 modem on Raspberry pi</a>
+                    </li>
+                
+                </ul>
+        </div>
+
+        <div class="categories">
+            <strong>Categories</strong>
+
+            
+                <ul>
+                
+                    <li>
+                        <a href="/categories/code">Code (1)</a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/tutorials">Tutorials (1)</a>
+                    </li>
+                
+                </ul>
+            
+        </div>
+
+        <div class="social-media">
+            <strong>Social media</strong>
+
+            
+            
+                <a href="https://twitter.com/frikimartin" target="_blank"><i class="fa fa-twitter"></i></a>
+            
+            
+            
+            
+            
+            
+            
+            
+                <a href="https://github.com/mattinsalto" target="_blank"><i class="fa fa-github"></i></a>
+            
+        </div>
+    </div>
+</footer>
+
+
+
+
+        
+
+        
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment-with-locales.min.js" integrity="sha256-TbOIe++NbC9P3KTtUMJ5wcROlBdnRqrPleLdpPg3xxE=" crossorigin="anonymous" type="application/javascript"></script>
+        <script src="/dist/theme.js" type="application/javascript"></script>
+
+        
+            
+        
+
+        <script>
+            $(document).ready(function() {
+                $(".moment").each(function() {
+                    $(this).text(
+                        moment( $(this).text() )
+                            .locale( "en" )
+                            .format('LL')
+                    );
+                });
+
+                $(".footnote-return sup").html("[return]")
+            })
+        </script>
+
+        
+            
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.29.0/autocomplete.jquery.min.js" integrity="sha256-qUqrH6CxKeU+3ClSSiq0GGnYjoKmfLhNO4tFoTCay5c=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/algoliasearch/3.24.5/algoliasearch.min.js" integrity="sha256-vUvLcn3X0cXhote4PNwW6d+fzjJR0hoD+yGFeVaElew=" crossorigin="anonymous"></script>
+
+<script>
+    var client = algoliasearch("QZZXEKELZT", "3842e278cbbbd91978b0d678be0827ea");
+    var index = client.initIndex("mattinsalto");
+
+    $('#search').autocomplete({ hint: false, autoselect: true, debug: false },
+      [
+        {
+          source: $.fn.autocomplete.sources.hits(index, { hitsPerPage: 5 }),
+          displayKey: function(suggestion) {
+            return suggestion.title || suggestion.author
+          },
+          templates: {
+            suggestion: function(suggestion) {
+                return "<span class='entry " + suggestion.type + "'>"
+                      + "<span class='title'>" + suggestion.title + "</span>"
+                      + "<span class='fa fa-fw " + suggestion.iconClass + "'></span>"
+                  + "</span>"
+                ;
+            },
+            empty: function() {
+              return "<span class='empty'>Nothing found.</span>"
+            },
+            footer: function() {
+              return '<div class="branding">Powered by <img src="https://www.algolia.com/static_assets/images/press/downloads/algolia-logo-light.svg" /></div>'
+            }
+
+          },
+        }
+      ])
+      .on('autocomplete:selected', function(event, suggestion, dataset) {
+        window.location = (suggestion.url);
+      })
+      .keypress(function (event, suggestion) {
+        if (event.which == 13) {
+          window.location = (suggestion.url);
+        }
+      });
+</script>
+
+        
+
+
+    </body>
+</html>
