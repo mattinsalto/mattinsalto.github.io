@@ -79,6 +79,71 @@
     
         <div class="article-wrapper u-cf">
             
+                <a class="bubble" href="/article/run-net-core-apps-on-raspberry-pi/">
+    <i class="fa fa-fw fa-pencil"></i>
+</a>
+
+<article class="default article">
+    
+    <div class="featured-image">
+        <a href="/article/run-net-core-apps-on-raspberry-pi/">
+            <img src="/images/netcoreraspi.png" alt="">
+        </a>
+    </div>
+
+
+    <div class="content">
+    <h3><a href="/article/run-net-core-apps-on-raspberry-pi/">Run net core apps on raspberry pi</a></h3>
+    <div class="meta">
+        <span class="date moment">2018-02-24</span>
+
+        
+            <span class="categories">
+                
+                    <a href="/categories/tutorials">Tutorials</a>
+                
+                    <a href="/categories/code">Code</a>
+                
+            </span>
+        
+
+        
+            <span class="author"><a href="/author/martin-garmendia">Martin Garmendia</a></span>
+        
+    </div>
+
+    
+        There is no SDK that runs on ARM32 but you can publish an application that will run on a Raspberry Pi.
+First we need to install the prerequisite packages for net core 2 on raspbian. Open a terminal session on the raspberry pi and type
+sudo apt-get update sudo apt-get install curl libunwind8 gettext apt-transport-https  Now we will create a sample app on our desktop pc:
+mkdir helloworld cd helloworld dotnet new console  The last command creates an example helloworld console program that we will use to test if it runs on the raspberry pi.
+
+        
+            <a href="/article/run-net-core-apps-on-raspberry-pi/" class="more">Continue reading</a>
+        
+    
+</div>
+
+    
+    
+    <div class="tags">
+        <i class="fa fa-tags"></i>
+        
+            <a href="/tags/raspberry-pi">raspberry pi</a>
+        
+            <a href="/tags/net-core">net core</a>
+        
+    </div>
+    
+
+
+</article>
+
+            
+        </div>
+    
+        <div class="article-wrapper u-cf">
+            
                 <a class="bubble" href="/code/remote-debugging-with-wing-python-ide/">
     <i class="fa fa-fw fa-code"></i>
 </a>
@@ -142,6 +207,75 @@ There are some options for Python remote debugging on a rpi, but only few of the
             
         </div>
     
+        <div class="article-wrapper u-cf">
+            
+                <a class="bubble" href="/article/huawei-e220-on-raspberry-pi/">
+    <i class="fa fa-fw fa-pencil"></i>
+</a>
+
+<article class="default article">
+    
+    <div class="featured-image">
+        <a href="/article/huawei-e220-on-raspberry-pi/">
+            <img src="/images/HuaweiRaspberry.jpg" alt="">
+        </a>
+    </div>
+
+
+    <div class="content">
+    <h3><a href="/article/huawei-e220-on-raspberry-pi/">Huawei E220 modem on Raspberry pi</a></h3>
+    <div class="meta">
+        <span class="date moment">2017-12-01</span>
+
+        
+            <span class="categories">
+                
+                    <a href="/categories/tutorials">Tutorials</a>
+                
+            </span>
+        
+
+        
+            <span class="author"><a href="/author/martin-garmendia">Martin Garmendia</a></span>
+        
+    </div>
+
+    
+        Linux kernel has drivers for this modem, so the installation is straight forward:
+# apt-get install wvdial  Edit configuration
+# nano /etc/wvdial.conf  Modem standard configuration:
+[Dialer Defaults] New PPPD = yes Stupid Mode = 1 Modem Type = 3G Modem Baud = 460800 Modem = /dev/ttyUSB0 ISDN = 0 [Dialer poweron] Init1 = AT+CFUN=1 [Dialer poweroff] Init1 = AT+CFUN=0  ISP specific config. Here you have different configurations for two ISPs from Spain.
+
+        
+            <a href="/article/huawei-e220-on-raspberry-pi/" class="more">Continue reading</a>
+        
+    
+</div>
+
+    
+    
+    <div class="tags">
+        <i class="fa fa-tags"></i>
+        
+            <a href="/tags/raspberry-pi">raspberry pi</a>
+        
+            <a href="/tags/huawei">huawei</a>
+        
+            <a href="/tags/3g-modem">3g-modem</a>
+        
+            <a href="/tags/movistar">movistar</a>
+        
+            <a href="/tags/freedompop">freedompop</a>
+        
+    </div>
+    
+
+
+</article>
+
+            
+        </div>
+    
 
     
     <div class="paginator">
@@ -161,6 +295,10 @@ There are some options for Python remote debugging on a rpi, but only few of the
                 <ul>
                 
                     <li>
+                        <a href="/article/run-net-core-apps-on-raspberry-pi/">Run net core apps on raspberry pi</a>
+                    </li>
+                
+                    <li>
                         <a href="/code/remote-debugging-with-wing-python-ide/">Pyhton remote debugging on a Raspberry Pi</a>
                     </li>
                 
@@ -178,11 +316,11 @@ There are some options for Python remote debugging on a rpi, but only few of the
                 <ul>
                 
                     <li>
-                        <a href="/categories/code">Code (1)</a>
+                        <a href="/categories/code">Code (2)</a>
                     </li>
                 
                     <li>
-                        <a href="/categories/tutorials">Tutorials (1)</a>
+                        <a href="/categories/tutorials">Tutorials (3)</a>
                     </li>
                 
                 </ul>

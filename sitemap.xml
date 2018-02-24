@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://mattinsalto.github.io/article/run-net-core-apps-on-raspberry-pi/</loc>
+    <lastmod>2018-02-24T20:26:14+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mattinsalto.github.io/code/remote-debugging-with-wing-python-ide/</loc>
     <lastmod>2017-12-14T20:31:27+01:00</lastmod>
   </url>
@@ -20,7 +25,7 @@
   
   <url>
     <loc>https://mattinsalto.github.io/article/</loc>
-    <lastmod>2017-12-01T18:10:14+01:00</lastmod>
+    <lastmod>2018-02-24T20:26:14+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -36,7 +41,7 @@
   
   <url>
     <loc>https://mattinsalto.github.io/categories/code/</loc>
-    <lastmod>2017-12-14T20:31:27+01:00</lastmod>
+    <lastmod>2018-02-24T20:26:14+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -66,13 +71,19 @@
   
   <url>
     <loc>https://mattinsalto.github.io/author/martin-garmendia/</loc>
-    <lastmod>2017-12-14T20:31:27+01:00</lastmod>
+    <lastmod>2018-02-24T20:26:14+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://mattinsalto.github.io/tags/movistar/</loc>
     <lastmod>2017-12-01T18:10:14+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://mattinsalto.github.io/tags/net-core/</loc>
+    <lastmod>2018-02-24T20:26:14+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -84,7 +95,7 @@
   
   <url>
     <loc>https://mattinsalto.github.io/tags/raspberry-pi/</loc>
-    <lastmod>2017-12-14T20:31:27+01:00</lastmod>
+    <lastmod>2018-02-24T20:26:14+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -96,13 +107,13 @@
   
   <url>
     <loc>https://mattinsalto.github.io/categories/tutorials/</loc>
-    <lastmod>2017-12-14T20:31:27+01:00</lastmod>
+    <lastmod>2018-02-24T20:26:14+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://mattinsalto.github.io/</loc>
-    <lastmod>2017-12-14T20:31:27+01:00</lastmod>
+    <lastmod>2018-02-24T20:26:14+01:00</lastmod>
     <priority>0</priority>
   </url>
   
